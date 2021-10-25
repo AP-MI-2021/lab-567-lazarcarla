@@ -16,7 +16,7 @@ def uiAdaugaRezervare(lista):
     id=input("dati id-ul:")
     nume=input("dati nume:")
     clasa= input("dati clasa:")
-    pret=int(input("dati pretul:"))
+    pret=float(input("dati pretul:"))
     checkin=input("dati checkin:")
     return adaugaRezervare(id, nume, clasa, pret, checkin, lista)
 
@@ -30,7 +30,7 @@ def uiModificaRezervare(lista):
     id = input("dati id-ul:")
     nume = input("dati nume:")
     clasa = input("dati clasa:")
-    pret = int(input("dati pretul:"))
+    pret = float(input("dati pretul:"))
     checkin = input("dati checkin:")
     return modificaRezervare(id, nume, clasa, pret, checkin, lista)
 
