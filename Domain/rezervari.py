@@ -4,7 +4,7 @@ def creeazaRezervare(id, nume, clasa, pret, checkin):
     :param id: string
     :param nume: string
     :param clasa: string
-    :param pret: int
+    :param pret: float
     :param checkin: string
     :return: un dictionar ce reprezinta o rezervare
     '''
