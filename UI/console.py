@@ -7,17 +7,17 @@ def printMenu():
     print("1.Adaugare rezervare")
     print("2.Stergere rezervare")
     print("3.Modifica rezervare")
-    print("4.Trecerea tuturor rezervărilor făcute pe un nume citit la o clasă superioară")
+    print("4.Trecerea tuturor rezervarilor facute pe un nume citit la o clasa superioara")
     print("a.Afisarea rezervarilor")
     print("x.Iesire")
 
 
 def uiAdaugaRezervare(lista):
-    id=input("dati id-ul:")
-    nume=input("dati nume:")
-    clasa= input("dati clasa:")
+    id=int(input("dati id-ul:"))
+    nume=str(input("dati nume:"))
+    clasa= str(input("dati clasa:"))
     pret=float(input("dati pretul:"))
-    checkin=input("dati checkin:")
+    checkin=str(input("dati checkin:"))
     return adaugaRezervare(id, nume, clasa, pret, checkin, lista)
 
 

@@ -3,11 +3,12 @@ from Domain.rezervari import creeazaRezervare, getNume, getClasa, getId, getPret
 
 def trecereRezervari(stringNume, lista):
     '''
-    Trecerea tuturor rezervărilor făcute pe un nume citit la o clasă superioară
-    :param stringNume:string
-    :param lista:lista de rezervari
+    Trecerea tuturor rezervarilor facute pe un nume citit la o clasa superioara
+    :param stringNume: string
+    :param lista: lista de rezervari
     :return: lista cu rezervarile dupa modificarea claselor
     '''
+
 
     listaNoua=[]
     for rezervare in lista:
