@@ -1,6 +1,7 @@
 from Domain.rezervari import toString
 from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare
-from Logic.functionalitate import trecereRezervari
+from Logic.functionalitate import trecereRezervari, maxPretPerClasa, ordonareDescrescatorDupaPret, \
+    afisareSumaPretPentruFiecareNume
 
 
 def printMenu():
@@ -8,6 +9,9 @@ def printMenu():
     print("2.Stergere rezervare")
     print("3.Modifica rezervare")
     print("4.Trecerea tuturor rezervarilor facute pe un nume citit la o clasa superioara")
+    print("6.Determinarea pretului maxim pentru fiecare clasa")
+    print("7.Ordonarea rezervarilor descrescator dupa pret")
+    print("8.Afisarea sumelor preturilor pentru fiecare nume")
     print("a.Afisarea rezervarilor")
     print("x.Iesire")
 
@@ -45,6 +49,22 @@ def uiTrecereRezervari(lista):
     return trecereRezervari(substringNume,lista)
 
 
+def uiMaxPretPerClasa(lista):
+    rezultat = maxPretPerClasa(lista)
+    for clasa in rezultat:
+        print ("Clasa {} are pretul maxim de {} lei". format(clasa, rezultat[clasa]))
+
+
+def uiOrdonareDescarescatorDupaPret(lista):
+    showAll(ordonareDescrescatorDupaPret(lista))
+
+
+def uiAfisareSumaPretPentruFiecareNume(lista):
+    rezultat=afisareSumaPretPentruFiecareNume(lista)
+    for nume in rezultat:
+        print("Numele {} are suma preturilor de {}". format(nume, rezultat[nume]))
+
+
 def runMenu(lista):
     while True:
         printMenu()
@@ -58,6 +78,12 @@ def runMenu(lista):
             lista=uiModificaRezervare(lista)
         elif optiune=="4":
             lista=uiTrecereRezervari(lista)
+        elif optiune=="6":
+            lista=uiMaxPretPerClasa(lista)
+        elif optiune=="7":
+            lista=uiOrdonareDescarescatorDupaPret(lista)
+        elif optiune=="8":
+            lista=uiAfisareSumaPretPentruFiecareNume(lista)
         elif optiune=="a":
             showAll(lista)
         elif optiune=="x":

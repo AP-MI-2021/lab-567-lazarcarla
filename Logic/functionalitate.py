@@ -33,3 +33,51 @@ def trecereRezervari(stringNume, lista):
         elif getNume(rezervare) == stringNume and getClasa(rezervare) == "business":
             listaNoua.append(rezervare)
     return listaNoua
+
+
+
+def maxPretPerClasa(lista):
+    '''
+    determina pentru fiecare clasa pretul maxim
+    :param lista: lista de rezervari
+    :return: pretul maxim pentru fiecare clasa
+    '''
+
+    rezultat={}
+    for rezervare in lista:
+        pret = getPret(rezervare)
+        clasa = getClasa(rezervare)
+        if clasa in rezultat:
+            if pret > rezultat[clasa]:
+                rezultat[clasa]= pret
+        else:
+            rezultat[clasa]= pret
+    return rezultat
+
+def ordonareDescrescatorDupaPret(lista):
+    '''
+    ordonarea rezervarilor in ordine descrescatoare dupa pret
+    :param lista: lista de rezervari
+    :return: rezervarile in ordine descrescatoare ordonate dupa pret
+    '''
+
+    return sorted(lista, key=lambda rezervare: getPret(rezervare), reverse=True)
+
+def afisareSumaPretPentruFiecareNume(lista):
+    '''
+    determina afisarea sumei preturilor pentru fiecare nume
+    :param lista:lista de rezervari
+    :return:suma preturilor pentru fiecare nume
+    '''
+    rezultat={}
+    for rezervare in lista:
+        pret=getPret(rezervare)
+        nume=getNume(rezervare)
+        if nume in rezultat:
+            rezultat[nume]=rezultat[nume] + pret
+        else:
+            rezultat[nume] = pret
+    return rezultat
+
+
+
