@@ -34,6 +34,31 @@ def trecereRezervari(stringNume, lista):
             listaNoua.append(rezervare)
     return listaNoua
 
+def ieftinirePret(procentaj, lista):
+    '''
+    determina ieftinirea tuturor rezervarilor cu checkin facut cu un procentaj citit
+    :param procentaj: procentajul cu care se ieftineste rezervarea
+    :param lista:lista de rezervari
+    :return: preturile ieftinite
+    '''
+    if procentaj<0:
+        raise ValueError("Procentajul trebuie sa fie un numar pozitiv!!!")
+    listaNoua=[]
+    for rezervare in lista:
+        if getCheckin(rezervare)=="da":
+            reducere=procentaj//100*getPret(rezervare)
+            rezervareNoua=creeazaRezervare(
+                getId(rezervare),
+                getNume(rezervare),
+                getClasa(rezervare),
+                getPret(rezervare)-reducere,
+                getCheckin(rezervare)
+            )
+            listaNoua.append(rezervareNoua)
+        elif getCheckin(rezervare)=="nu":
+            listaNoua.append(rezervare)
+    return listaNoua
+
 
 
 def maxPretPerClasa(lista):
