@@ -46,7 +46,7 @@ def ieftinirePret(procentaj, lista):
     listaNoua=[]
     for rezervare in lista:
         if getCheckin(rezervare)=="da":
-            reducere=procentaj//100*getPret(rezervare)
+            reducere=procentaj/100*getPret(rezervare)
             rezervareNoua=creeazaRezervare(
                 getId(rezervare),
                 getNume(rezervare),

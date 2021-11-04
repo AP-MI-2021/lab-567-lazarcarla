@@ -1,5 +1,5 @@
-from Domain.rezervari import toString
-from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare
+from Domain.rezervari import toString, getNume, getClasa, getPret, getCheckin
+from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare, getById
 from Logic.functionalitate import trecereRezervari, maxPretPerClasa, ordonareDescrescatorDupaPret, \
     afisareSumaPretPentruFiecareNume, ieftinirePret
 
@@ -13,39 +13,81 @@ def printMenu():
     print("6.Determinarea pretului maxim pentru fiecare clasa")
     print("7.Ordonarea rezervarilor descrescator dupa pret")
     print("8.Afisarea sumelor preturilor pentru fiecare nume")
+    print("u.Undo")
+    print("r.Redo")
     print("a.Afisarea rezervarilor")
     print("x.Iesire")
 
 
-def uiAdaugaRezervare(lista):
+def uiAdaugaRezervare(lista, undoOperations, redoOperations):
     try:
         id=int(input("dati id-ul:"))
         nume=str(input("dati nume:"))
         clasa= str(input("dati clasa:"))
         pret=float(input("dati pretul:"))
         checkin=str(input("dati checkin:"))
-        return adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+
+        rezultat=adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+        undoOperations.append([
+            lambda: stergeRezervare(id, rezultat),
+            lambda: adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+        ])
+        del redoOperations[:]
+        return rezultat
+
     except ValueError as ve:
         print ("Eroare: {}". format(ve))
         return lista
 
 
-def uiStergeRezervare(lista):
+def uiStergeRezervare(lista, undoOperations, redoOperations):
     try:
         id=input("dati id-ul functiei pe care vreti sa o stergeti:")
-        return stergeRezervare(id, lista)
+
+        rezultat=stergeRezervare(id, lista)
+        rezervareDeSters=getById(id, lista)
+        undoOperations.append([
+            lambda: adaugaRezervare(
+                id,
+                getNume(rezervareDeSters),
+                getClasa(rezervareDeSters),
+                getPret(rezervareDeSters),
+                getCheckin(rezervareDeSters),
+                rezultat
+            ),
+            lambda: stergeRezervare(id, lista)
+        ])
+        del redoOperations[:]
+
+        return rezultat
     except ValueError as ve:
         print ("Eroare :{}". format(ve))
         return lista
 
-def uiModificaRezervare(lista):
+def uiModificaRezervare(lista, undoOperations, redoOperations):
     try:
         id = input("dati id-ul:")
         nume = str(input("dati nume:"))
         clasa =str (input("dati clasa:"))
         pret = float(input("dati pretul:"))
         checkin =str(input("dati checkin:"))
-        return modificaRezervare(id, nume, clasa, pret, checkin, lista)
+
+        rezultat=modificaRezervare(id, nume, clasa, pret, checkin, lista)
+        rezervareVeche=getById(id, lista)
+        undoOperations.append([
+            lambda: modificaRezervare(
+                id,
+                getNume(rezervareVeche),
+                getClasa(rezervareVeche),
+                getPret(rezervareVeche),
+                getCheckin(rezervareVeche),
+                rezultat
+            ),
+            lambda: modificaRezervare(id, nume, clasa, pret, checkin, lista)
+        ])
+        del redoOperations[:]
+
+        return rezultat
     except ValueError as ve:
         print("Eroare: {}". format(ve))
         return lista
@@ -99,16 +141,18 @@ def uiIeftinirePret(lista):
 
 
 def runMenu(lista):
+    undoOperations = []
+    redoOperations = []
     while True:
         printMenu()
         optiune=input("dati optiunea :")
 
         if optiune=="1":
-            lista=uiAdaugaRezervare(lista)
+            lista=uiAdaugaRezervare(lista, undoOperations, redoOperations)
         elif optiune=="2":
-            lista=uiStergeRezervare(lista)
+            lista=uiStergeRezervare(lista, undoOperations, redoOperations)
         elif optiune=="3":
-            lista=uiModificaRezervare(lista)
+            lista=uiModificaRezervare(lista, undoOperations,redoOperations)
         elif optiune=="4":
             lista=uiTrecereRezervari(lista)
         elif optiune=="5":
@@ -119,6 +163,20 @@ def runMenu(lista):
             lista=uiOrdonareDescarescatorDupaPret(lista)
         elif optiune=="8":
             lista=uiAfisareSumaPretPentruFiecareNume(lista)
+        elif optiune=="u":
+            if len(undoOperations) > 0:
+                operations=undoOperations.pop()
+                redoOperations.append(operations)
+                lista=operations[0]()
+            else:
+                print("Nu se poate face undo!")
+        elif optiune=="r":
+            if len(redoOperations)>0:
+                operations=redoOperations.pop()
+                undoOperations.append(operations)
+                lista=operations[1]()
+            else:
+                print("Nu se poate face redo!!")
         elif optiune=="a":
             showAll(lista)
         elif optiune=="x":

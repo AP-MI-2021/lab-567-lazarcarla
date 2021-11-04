@@ -1,48 +1,47 @@
-from Domain.rezervari import toString
 from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare
+from UI.console import showAll
 
 
-def showAll(lista):
-    for rezervare in lista:
-        print(toString(rezervare))
+def printMenu():
+    print("Add,id , nume, clasa, pret, checkin --> adauga o noua rezervare")
+    print("Delete, id -->Sterge o rezervare")
+    print("Update, id, nume, clasa, pret, checkin -->modifica o rezervare")
+    print("ShowAll -->afiseaza toate rezervarile")
+    print("Stop -->opreste programul")
 
-def meniu_help():
-    print("Add, id, nume, clasa, pret, checkin  ->Adauga rezervarea")
-    print("Delete, id ->Sterge rezervarea")
-    print("Update, id, nume, clasa, pret, checkin ->Modifica rezervarea")
-    print("ShowAll ->Afiseaza toate rezervarile din lista")
-    print("Stop ->Oprire program")
+def mainCommand(lista):
 
-
-def commandMenu(lista):
     while True:
-        command=input()
-        if command=='Help':
-            meniu_help()
+        printMenu()
+        option=input()
+        if option=="help":
+            printMenu()
         else:
-            string = command.split(";")
-            if string[0]=='Stop':
+            string=option.split(";")
+            if string[0] == "Stop":
                 break
             else:
-                for elemente in string:
-                    comenzi=elemente.split(',')
-                    if comenzi[0]=='Add':
+                for elements in string:
+                    elem=elements.split(",")
+                    if elem[0]=="Add":
+                        lista=adaugaRezervare(elem[1], elem[2], elem[3], float(elem[4]), elem[5],lista)
+                    elif elem[0]=="Delete":
                         try:
-                            lista=adaugaRezervare(comenzi[1], comenzi[2], comenzi[3], float(comenzi[4]), comenzi[5], lista)
-                        except ValueError as ve:
-                            print("Eroare : {}". format(ve))
-                    elif comenzi[0]=='Delete':
-                        lista=stergeRezervare(comenzi[1], lista)
-                    elif comenzi[0]=='Update':
-                        lista=modificaRezervare(comenzi[1], comenzi[2], comenzi[3], float(comenzi[4]), comenzi[5], lista)
-                    elif comenzi[0]=='ShowAll':
+                            lista=stergeRezervare(elem[1], lista)
+                        except ValueError:
+                            print("Nu exista rezervarea cu id-ul dat pentru a o sterge!")
+                    elif elem[0]=="Update":
+                        try:
+                            lista=modificaRezervare(elem[1], elem[2], elem[3], float(elem[4]), elem[5], lista)
+                        except ValueError:
+                            print("Nu exista rezervarea cu id-ul dat pentru a o modifica!")
+                    elif elem[0]=="ShowAll":
                         showAll(lista)
                     else:
-                        print("Optiune gresita, tastati Help pentru a vedea optiunuile disponibile!!")
+                        print("optiune gresita! reincercati!!!")
 
 lista=[]
-commandMenu(lista)
-
+mainCommand(lista)
 
 
 

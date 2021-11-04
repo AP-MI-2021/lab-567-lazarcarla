@@ -8,22 +8,22 @@ def creeazaRezervare(id, nume, clasa, pret, checkin):
     :param checkin: string
     :return: un dictionar ce reprezinta o rezervare
     '''
-    #return [id, nume, clasa, pret, checkin]
-    return {
-        "id":id,
-        "nume":nume,
-        "clasa":clasa,
-        "pret":pret,
-        "checkin":checkin
-    }
+    return [id, nume, clasa, pret, checkin]
+    #return {
+    #   "id":id,
+    #   "nume":nume,
+    #    "clasa":clasa,
+    #    "pret":pret,
+    #    "checkin":checkin
+    #}
 def getId(rezervare):
     '''
     da id-ul unei rezervari
     :param rezervare: dictionar ce contine o rezervare
     :return:id-ul rezervarii
     '''
-    #return rezervare[0]
-    return rezervare["id"]
+    return rezervare[0]
+    #return rezervare["id"]
 
 def getNume(rezervare):
     '''
@@ -31,8 +31,8 @@ def getNume(rezervare):
     :param rezervare: dictionar ce contine o rezervare
     :return: numele unei rezervari
     '''
-    #return rezervare[1]
-    return rezervare["nume"]
+    return rezervare[1]
+    #return rezervare["nume"]
 
 
 def getClasa(rezervare):
@@ -41,8 +41,8 @@ def getClasa(rezervare):
     :param rezervare: dictionar ce contine o rezervare
     :return: clasa unei rezervari:economy, economy plus, business
     '''
-    #return rezervare[2]
-    return rezervare["clasa"]
+    return rezervare[2]
+    #return rezervare["clasa"]
 
 
 def getPret(rezervare):
@@ -51,8 +51,8 @@ def getPret(rezervare):
     :param rezervare: dictionar ce contine o rezervare
     :return: pretul unei rezervari
     '''
-    #return rezervare[3]
-    return rezervare["pret"]
+    return rezervare[3]
+    #return rezervare["pret"]
 
 
 def getCheckin(rezervare):
@@ -61,8 +61,8 @@ def getCheckin(rezervare):
     :param rezervare: dictionar ce contine o rezervare
     :return: checkin-ul unei rezervari: "da" daca este facut , sau "nu" in caz ca nu este facut
     '''
-    #return rezervare[4]
-    return rezervare["checkin"]
+    return rezervare[4]
+    #return rezervare["checkin"]
 
 
 def toString(rezervare):
