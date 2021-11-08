@@ -13,11 +13,11 @@ def testUndoRedo():
     undoList.append(lista)
     lista = rezultat
     #3 adauga o rezervare
-    lista = adaugaRezervare("2", "Mariana", "economy", 245.0, "da", lista)
+    rezultat = adaugaRezervare("2", "Mariana", "economy", 245.0, "da", lista)
     undoList.append(lista)
     lista = rezultat
     #4 adauga o rezervare
-    lista = adaugaRezervare("3", "Denisa", "economy plus", 50.5, "nu", lista)
+    rezultat = adaugaRezervare("3", "Denisa", "economy plus", 50.5, "nu", lista)
     undoList.append(lista)
     lista=rezultat
     #5 undo scote ultina rezervare
@@ -25,7 +25,7 @@ def testUndoRedo():
     lista=undoList.pop()
     assert len(lista) == 2
     print(getId(lista[1]))
-    assert getId(lista[1]) == "3"
+    assert getId(lista[1]) == "2"
     assert getId(lista[0]) == "1"
     #6 undo scoate penultima rezervare
     redoList.append(lista)
@@ -58,7 +58,7 @@ def testUndoRedo():
     undoList.append(lista)
     lista = rezultat
     assert len(redoList) == 0
-    assert len(UndoList) == 3
+    assert len(undoList) == 3
     assert len(lista) == 3
     #10 facem redo
     if len(redoList) > 0:
