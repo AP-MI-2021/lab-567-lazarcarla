@@ -63,7 +63,7 @@ def testAfisareSumaPretPentruFiecareNume():
     lista = adaugaRezervare("1", "Maria", "economy", 200.00, "da", lista)
     lista = adaugaRezervare("2", "Maria", "economy plus", 390.00, "da", lista)
     lista = adaugaRezervare("3", "Denisa", "business", 550.00, "nu", lista)
-    lista = adaugaRezervare("4", "Denisa", " economy", 200.00, "nu", lista)
+    lista = adaugaRezervare("4", "Denisa", "economy", 200.00, "nu", lista)
 
     rezultat = afisareSumaPretPentruFiecareNume(lista)
 

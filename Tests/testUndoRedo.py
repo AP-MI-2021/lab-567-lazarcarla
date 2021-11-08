@@ -6,12 +6,12 @@ def testUndoRedo():
     undoOperations = []
     redoOperations = []
 
-    rezultat = adaugaRezervare("1", "Adrian", "bussines", 450.0, "da", lista)
+    rezultat = adaugaRezervare("1", "Adrian", "business", 450.0, "da", lista)
     undoOperations.append([
         lambda:stergeRezervare("1", lista),
         lambda:adaugaRezervare("1", "Adrian", "bussines", 450.0, "da", lista)
     ])
-    del redoOperations[:]
+    redoOperations.clear()
     lista = rezultat
 
     lista = adaugaRezervare("2", "Mariana", "economy", 245.0, "da", lista)
@@ -19,7 +19,7 @@ def testUndoRedo():
         lambda:stergeRezervare("2", lista),
         lambda:adaugaRezervare("2", "Mariana", "economy", 245.0, "da", lista)
     ])
-    del redoOperations[:]
+    redoOperations.clear()
     lista = rezultat
 
     lista = adaugaRezervare("3", "Denisa", "economy plus", 50.5, "nu", lista)
@@ -27,7 +27,7 @@ def testUndoRedo():
         lambda:stergeRezervare("3", lista),
         lambda:adaugaRezervare("3", "Denisa", "economy plus", 50.5, "nu", lista)
     ])
-    del redoOperations[:]
+    redoOperations.clear()
     lista=rezultat
 
     if len(undoOperations) > 0:
@@ -35,9 +35,10 @@ def testUndoRedo():
         redoOperations.append(operations)
         lista = operations[0]()
 
-    assert len(lista) == 2
+    assert len(lista) == 1
     assert getById("1", lista) is not None
-    assert getById("2", lista) is not None
+    assert getById("2", lista) is None
+    assert getById("3", lista) is None
 
     if len(undoOperations) > 0:
         operations = undoOperations.pop()
@@ -61,12 +62,12 @@ def testUndoRedo():
 
     assert len(lista) == 0
 
-    rezultat = adaugaRezervare("1", "Mihai", "bussines", 4300.0, "nu", lista)
+    rezultat = adaugaRezervare("1", "Mihai", "business", 4300.0, "nu", lista)
     undoOperations.append([
         lambda:stergeRezervare("1", lista),
-        lambda:adaugaRezervare("1", "Mihai", "bussines", 4300.0, "nu", lista)
+        lambda:adaugaRezervare("1", "Mihai", "business", 4300.0, "nu", lista)
     ])
-    del redoOperations[:]
+    redoOperations.clear()
     lista = rezultat
 
     rezultat = adaugaRezervare("2", "Denis", "economy plus", 300.0, "da", lista)
@@ -74,7 +75,7 @@ def testUndoRedo():
         lambda:stergeRezervare("2", lista),
         lambda:adaugaRezervare("2", "Denis", "economy plus", 300.0, "da", lista)
     ])
-    del redoOperations[:]
+    redoOperations.clear()
     lista = rezultat
 
     rezultat = adaugaRezervare("3", "Ioana", "economy", 500.0, "da", lista)
@@ -82,7 +83,7 @@ def testUndoRedo():
         lambda:stergeRezervare("3", lista),
         lambda:adaugaRezervare("3", "Ioana", "economy", 500.0, "da", lista)
     ])
-    del redoOperations[:]
+    redoOperations.clear()
     lista = rezultat
 
     if len(redoOperations) > 0:
@@ -110,7 +111,7 @@ def testUndoRedo():
         lambda:stergeRezervare("4", lista),
         lambda:adaugaRezervare("4", "Cristian", "economy", 200.0, "da", lista)
     ])
-    del redoOperations[:]
+    redoOperations.clear()
     lista = rezultat
 
     if len(redoOperations) > 0:

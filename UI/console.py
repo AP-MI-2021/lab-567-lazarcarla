@@ -32,7 +32,7 @@ def uiAdaugaRezervare(lista, undoOperations, redoOperations):
             lambda: stergeRezervare(id, rezultat),
             lambda: adaugaRezervare(id, nume, clasa, pret, checkin, lista)
         ])
-        del redoOperations[:]
+        redoOperations.clear()
         return rezultat
 
     except ValueError as ve:
@@ -57,7 +57,7 @@ def uiStergeRezervare(lista, undoOperations, redoOperations):
             ),
             lambda: stergeRezervare(id, lista)
         ])
-        del redoOperations[:]
+        redoOperations.clear()
 
         return rezultat
     except ValueError as ve:
@@ -86,7 +86,7 @@ def uiModificaRezervare(lista, undoOperations, redoOperations):
             ),
             lambda: modificaRezervare(id, nume, clasa, pret, checkin, lista)
         ])
-        del redoOperations[:]
+        redoOperations.clear()
 
         return rezultat
     except ValueError as ve:
@@ -99,7 +99,7 @@ def showAll(lista):
         print(toString(rezervare))
 
 
-def uiTrecereRezervari(lista):
+def uiTrecereRezervari(lista, undoOperations, redoOperations):
     try:
         substringNume = input("dati numele persoanei care are rezervare pentru a o trece la o clasa superioara: ")
         rezultat = trecereRezervari(substringNume, lista)
