@@ -3,7 +3,7 @@ from UI.console import showAll
 
 
 def printMenu():
-    print("Add,id , nume, clasa, pret, checkin --> adauga o noua rezervare")
+    print("Add, id, nume, clasa, pret, checkin --> adauga o noua rezervare")
     print("Delete, id -->Sterge o rezervare")
     print("Update, id, nume, clasa, pret, checkin -->modifica o rezervare")
     print("ShowAll -->afiseaza toate rezervarile")

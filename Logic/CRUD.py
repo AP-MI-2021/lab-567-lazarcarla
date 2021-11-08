@@ -16,13 +16,6 @@ def adaugaRezervare(id, nume, clasa, pret, checkin, lista):
         raise ValueError("Id-ul exista deja!!")
     if pret < 0:
         raise ValueError("Pretul nu poate fii negativ!!")
-    if clasa != "economy":
-        if clasa != "economy plus":
-            if clasa != "business":
-                raise ValueError("Ati introdus o clasa gresita !!")
-    if checkin != "da":
-        if checkin != "nu":
-            raise ValueError("Ati introdus un checkin gresit!")
     rezervare = creeazaRezervare(id, nume, clasa, pret, checkin)
     return lista + [rezervare]
 
