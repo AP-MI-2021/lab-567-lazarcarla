@@ -19,7 +19,7 @@ def printMenu():
     print("x.Iesire")
 
 
-def uiAdaugaRezervare(lista, undoOperations, redoOperations):
+def uiAdaugaRezervare(lista, undoList, redoList):
     try:
         id = int(input("dati id-ul:"))
         nume = str(input("dati nume:"))
@@ -28,11 +28,8 @@ def uiAdaugaRezervare(lista, undoOperations, redoOperations):
         checkin = str(input("dati checkin:"))
 
         rezultat = adaugaRezervare(id, nume, clasa, pret, checkin, lista)
-        undoOperations.append([
-            lambda: stergeRezervare(id, rezultat),
-            lambda: adaugaRezervare(id, nume, clasa, pret, checkin, lista)
-        ])
-        redoOperations.clear()
+        undoList.append(lista)
+        redoList.clear()
         return rezultat
 
     except ValueError as ve:
@@ -40,24 +37,13 @@ def uiAdaugaRezervare(lista, undoOperations, redoOperations):
         return lista
 
 
-def uiStergeRezervare(lista, undoOperations, redoOperations):
+def uiStergeRezervare(lista, undoList, redoList):
     try:
         id = input("dati id-ul functiei pe care vreti sa o stergeti:")
 
         rezultat = stergeRezervare(id, lista)
-        rezervareDeSters = getById(id, lista)
-        undoOperations.append([
-            lambda: adaugaRezervare(
-                id,
-                getNume(rezervareDeSters),
-                getClasa(rezervareDeSters),
-                getPret(rezervareDeSters),
-                getCheckin(rezervareDeSters),
-                rezultat
-            ),
-            lambda: stergeRezervare(id, lista)
-        ])
-        redoOperations.clear()
+        undoList.append(lista)
+        redoList.clear()
 
         return rezultat
     except ValueError as ve:
@@ -65,7 +51,7 @@ def uiStergeRezervare(lista, undoOperations, redoOperations):
         return lista
 
 
-def uiModificaRezervare(lista, undoOperations, redoOperations):
+def uiModificaRezervare(lista, undoList, redoList):
     try:
         id = input("dati id-ul:")
         nume = str(input("dati nume:"))
@@ -74,19 +60,8 @@ def uiModificaRezervare(lista, undoOperations, redoOperations):
         checkin = str(input("dati checkin:"))
 
         rezultat = modificaRezervare(id, nume, clasa, pret, checkin, lista)
-        rezervareVeche = getById(id, lista)
-        undoOperations.append([
-            lambda: modificaRezervare(
-                id,
-                getNume(rezervareVeche),
-                getClasa(rezervareVeche),
-                getPret(rezervareVeche),
-                getCheckin(rezervareVeche),
-                rezultat
-            ),
-            lambda: modificaRezervare(id, nume, clasa, pret, checkin, lista)
-        ])
-        redoOperations.clear()
+        undoList.append(lista)
+        redoList.clear()
 
         return rezultat
     except ValueError as ve:
@@ -99,10 +74,12 @@ def showAll(lista):
         print(toString(rezervare))
 
 
-def uiTrecereRezervari(lista, undoOperations, redoOperations):
+def uiTrecereRezervari(lista, undoList, redoList):
     try:
         substringNume = input("dati numele persoanei care are rezervare pentru a o trece la o clasa superioara: ")
         rezultat = trecereRezervari(substringNume, lista)
+        undoList.append(lista)
+        redoList.clear()
         showAll(rezultat)
     except ValueError as ve:
         print("Eroare: {}".format(ve))
@@ -137,29 +114,31 @@ def uiAfisareSumaPretPentruFiecareNume(lista):
         return lista
 
 
-def uiIeftinirePret(lista):
+def uiIeftinirePret(lista, undoList, redoList):
     procentaj = int(input("dati procentul cu care se va iefini pretul rezervarii :"))
     rezultat = ieftinirePret(procentaj, lista)
+    undoList.append(lista)
+    redoList.clear()
     showAll(rezultat)
 
 
 def runMenu(lista):
-    undoOperations = []
-    redoOperations = []
+    undoList=[]
+    redoList=[]
     while True:
         printMenu()
         optiune = input("dati optiunea :")
 
         if optiune == "1":
-            lista = uiAdaugaRezervare(lista, undoOperations, redoOperations)
+            lista = uiAdaugaRezervare(lista, undoList, redoList)
         elif optiune == "2":
-            lista = uiStergeRezervare(lista, undoOperations, redoOperations)
+            lista = uiStergeRezervare(lista, undoList, redoList)
         elif optiune == "3":
-            lista = uiModificaRezervare(lista, undoOperations, redoOperations)
+            lista = uiModificaRezervare(lista, undoList, redoList)
         elif optiune == "4":
-            lista = uiTrecereRezervari(lista)
+            lista = uiTrecereRezervari(lista, undoList, redoList)
         elif optiune == "5":
-            lista = uiIeftinirePret(lista)
+            lista = uiIeftinirePret(lista, undoList, redoList)
         elif optiune == "6":
             lista = uiMaxPretPerClasa(lista)
         elif optiune == "7":
@@ -167,17 +146,15 @@ def runMenu(lista):
         elif optiune == "8":
             lista = uiAfisareSumaPretPentruFiecareNume(lista)
         elif optiune == "u":
-            if len(undoOperations) > 0:
-                operations = undoOperations.pop()
-                redoOperations.append(operations)
-                lista = operations[0]()
+            if len(undoList) > 0:
+                redoList.append(lista)
+                lista=undoList.pop()
             else:
                 print("Nu se poate face undo!")
         elif optiune == "r":
-            if len(redoOperations) > 0:
-                operations = redoOperations.pop()
-                undoOperations.append(operations)
-                lista = operations[1]()
+            if len(redoList) > 0:
+                undoList.append(lista)
+                lista=redoList.pop()
             else:
                 print("Nu se poate face redo!!")
         elif optiune == "a":
