@@ -1,4 +1,4 @@
-'''
+
 from Domain.rezervari import getId
 from Logic.CRUD import adaugaRezervare, stergeRezervare, getById
 
@@ -24,7 +24,8 @@ def testUndoRedo():
     redoList.append(lista)
     lista=undoList.pop()
     assert len(lista) == 2
-    assert getId(lista[1]) == "2"
+    print(getId(lista[1]))
+    assert getId(lista[1]) == "3"
     assert getId(lista[0]) == "1"
     #6 undo scoate penultima rezervare
     redoList.append(lista)
@@ -159,4 +160,3 @@ def testUndoRedo():
     assert len(lista) == 2
     assert len(redoList) == 0
     assert len(undoList) == 2
-'''
