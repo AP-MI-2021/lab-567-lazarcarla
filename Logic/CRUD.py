@@ -14,10 +14,11 @@ def adaugaRezervare(id, nume, clasa, pret, checkin, lista):
     '''
     if getById(id, lista) is not None:
         raise ValueError("Id-ul exista deja!!")
-    rezervare=creeazaRezervare(id, nume, clasa, pret, checkin)
+    rezervare = creeazaRezervare(id, nume, clasa, pret, checkin)
     return lista + [rezervare]
 
-def getById( id , lista):
+
+def getById(id, lista):
     '''
     returneaza rezervarea data cu id-ul dintr-o lista
     :param id: string
@@ -29,6 +30,7 @@ def getById( id , lista):
             return rezervare
     return None
 
+
 def stergeRezervare(id, lista):
     '''
     sterge o rezervare dupa un id dat
@@ -36,11 +38,12 @@ def stergeRezervare(id, lista):
     :param lista:lista de rezervari
     :return:lista dupa ce s-a sters rezervarea cu id-ul specificat
     '''
-    if getById(id, lista ) is None:
-        raise ValueError("Id-ul dat nu exista!!")
+    '''if getById(id, lista) is None:
+        raise ValueError("Id-ul dat nu exista!!")'''
     return [rezervare for rezervare in lista if getId(rezervare) != id]
 
-def modificaRezervare(id , nume, clasa, pret, checkin, lista):
+
+def modificaRezervare(id, nume, clasa, pret, checkin, lista):
     '''
     modifica o rezervare dupa id
     :param id: id-ul rezervarii
@@ -53,12 +56,11 @@ def modificaRezervare(id , nume, clasa, pret, checkin, lista):
     '''
     if getById(id, lista) is None:
         raise ValueError("Id-ul dat nu exista!!!")
-    listaNoua=[]
+    listaNoua = []
     for rezervare in lista:
-        if getId(rezervare)== id:
-            rezervareNoua=creeazaRezervare(id, nume, clasa, pret, checkin)
+        if getId(rezervare) == id:
+            rezervareNoua = creeazaRezervare(id, nume, clasa, pret, checkin)
             listaNoua.append(rezervareNoua)
         else:
             listaNoua.append(rezervare)
     return listaNoua
-

@@ -8,12 +8,10 @@ def trecereRezervari(stringNume, lista):
     :param lista: lista de rezervari
     :return: lista cu rezervarile dupa modificarea claselor
     '''
-
-
-    listaNoua=[]
+    listaNoua = []
     for rezervare in lista:
-        if getNume(rezervare)==stringNume and getClasa(rezervare)=="economy":
-            rezervareNoua=creeazaRezervare(
+        if getNume(rezervare) == stringNume and getClasa(rezervare) == "economy":
+            rezervareNoua = creeazaRezervare(
                 getId(rezervare),
                 getNume(rezervare),
                 "economy plus",
@@ -21,8 +19,8 @@ def trecereRezervari(stringNume, lista):
                 getCheckin(rezervare)
             )
             listaNoua.append(rezervareNoua)
-        elif getNume(rezervare)== stringNume and getClasa(rezervare)=="economy plus":
-            rezervareNoua=creeazaRezervare(
+        elif getNume(rezervare) == stringNume and getClasa(rezervare) == "economy plus":
+            rezervareNoua = creeazaRezervare(
                 getId(rezervare),
                 getNume(rezervare),
                 "business",
@@ -34,6 +32,7 @@ def trecereRezervari(stringNume, lista):
             listaNoua.append(rezervare)
     return listaNoua
 
+
 def ieftinirePret(procentaj, lista):
     '''
     determina ieftinirea tuturor rezervarilor cu checkin facut cu un procentaj citit
@@ -41,13 +40,13 @@ def ieftinirePret(procentaj, lista):
     :param lista:lista de rezervari
     :return: preturile ieftinite
     '''
-    if procentaj<0:
+    if procentaj < 0:
         raise ValueError("Procentajul trebuie sa fie un numar pozitiv!!!")
-    listaNoua=[]
+    listaNoua = []
     for rezervare in lista:
-        if getCheckin(rezervare)=="da":
-            reducere=procentaj/100*getPret(rezervare)
-            rezervareNoua=creeazaRezervare(
+        if getCheckin(rezervare) == "da":
+            reducere = procentaj/100*getPret(rezervare)
+            rezervareNoua = creeazaRezervare(
                 getId(rezervare),
                 getNume(rezervare),
                 getClasa(rezervare),
@@ -55,10 +54,9 @@ def ieftinirePret(procentaj, lista):
                 getCheckin(rezervare)
             )
             listaNoua.append(rezervareNoua)
-        elif getCheckin(rezervare)=="nu":
+        elif getCheckin(rezervare) == "nu":
             listaNoua.append(rezervare)
     return listaNoua
-
 
 
 def maxPretPerClasa(lista):
@@ -68,16 +66,17 @@ def maxPretPerClasa(lista):
     :return: pretul maxim pentru fiecare clasa
     '''
 
-    rezultat={}
+    rezultat = {}
     for rezervare in lista:
         pret = getPret(rezervare)
         clasa = getClasa(rezervare)
         if clasa in rezultat:
             if pret > rezultat[clasa]:
-                rezultat[clasa]= pret
+                rezultat[clasa] = pret
         else:
-            rezultat[clasa]= pret
+            rezultat[clasa] = pret
     return rezultat
+
 
 def ordonareDescrescatorDupaPret(lista):
     '''
@@ -88,21 +87,19 @@ def ordonareDescrescatorDupaPret(lista):
 
     return sorted(lista, key=lambda rezervare: getPret(rezervare), reverse=True)
 
+
 def afisareSumaPretPentruFiecareNume(lista):
     '''
     determina afisarea sumei preturilor pentru fiecare nume
     :param lista:lista de rezervari
     :return:suma preturilor pentru fiecare nume
     '''
-    rezultat={}
+    rezultat = {}
     for rezervare in lista:
-        pret=getPret(rezervare)
-        nume=getNume(rezervare)
+        pret = getPret(rezervare)
+        nume = getNume(rezervare)
         if nume in rezultat:
-            rezultat[nume]=rezultat[nume] + pret
+            rezultat[nume] = rezultat[nume] + pret
         else:
             rezultat[nume] = pret
     return rezultat
-
-
-

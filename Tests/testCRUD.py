@@ -3,10 +3,10 @@ from Logic.CRUD import adaugaRezervare, getById, stergeRezervare, modificaRezerv
 
 
 def testAdaugaRezervare():
-    lista=[]
-    lista=adaugaRezervare("1", "Marian", "economy", 200, "da",lista)
+    lista = []
+    lista = adaugaRezervare("1", "Marian", "economy", 200, "da", lista)
 
-    assert len(lista)==1
+    assert len(lista) == 1
     assert getId(getById("1", lista)) == "1"
     assert getNume(getById("1", lista)) == "Marian"
     assert getClasa(getById("1", lista)) == "economy"
@@ -15,26 +15,27 @@ def testAdaugaRezervare():
 
 
 def testStergeRezervare():
-    lista=[]
+    lista = []
     lista = adaugaRezervare("1", "Marian", "economy", 200, "da", lista)
     lista = adaugaRezervare("2", "Maria", "economy plus", 300, "nu", lista)
 
-    lista=stergeRezervare("1", lista)
+    lista = stergeRezervare("1", lista)
 
     assert len(lista) == 1
     assert getById("1", lista) is None
     assert getById("2", lista) is not None
 
+
 def testModificaRezervarea():
-    lista=[]
+    lista = []
     lista = adaugaRezervare("1", "Marian", "economy", 200, "da", lista)
     lista = adaugaRezervare("2", "Maria", "economy plus", 300, "nu", lista)
 
-    lista=modificaRezervare("1", "Denisa", "business", 450, "nu", lista)
+    lista = modificaRezervare("1", "Denisa", "business", 450, "nu", lista)
 
-    rezervareUpdatata=getById("1", lista)
-    assert getId(rezervareUpdatata)=="1"
-    assert getNume(rezervareUpdatata)=="Denisa"
-    assert getClasa(rezervareUpdatata)=="business"
-    assert getPret(rezervareUpdatata)==450
-    assert getCheckin(rezervareUpdatata)=="nu"
+    rezervareUpdatata = getById("1", lista)
+    assert getId(rezervareUpdatata) == "1"
+    assert getNume(rezervareUpdatata) == "Denisa"
+    assert getClasa(rezervareUpdatata) == "business"
+    assert getPret(rezervareUpdatata) == 450
+    assert getCheckin(rezervareUpdatata) == "nu"
