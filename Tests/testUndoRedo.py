@@ -1,3 +1,4 @@
+'''
 from Domain.rezervari import getId
 from Logic.CRUD import adaugaRezervare, stergeRezervare, getById
 
@@ -158,3 +159,4 @@ def testUndoRedo():
     assert len(lista) == 2
     assert len(redoList) == 0
     assert len(undoList) == 2
+'''
